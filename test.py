@@ -14,7 +14,7 @@ def test(dataset_name):
 
     cuda = True
     cudnn.benchmark = True
-    batch_size = 8
+    batch_size = 16
     image_size = 224
     alpha = 0
 
@@ -23,7 +23,7 @@ def test(dataset_name):
     transform = transforms.Compose([
         transforms.Resize(image_size),
         transforms.ToTensor(),
-        transforms.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5))
+        transforms.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))
     ])
     if dataset_name == 'source':
         dataset = GetLoader(
@@ -82,6 +82,6 @@ def test(dataset_name):
 
         i += 1
 
-    accu = n_correct.data.numpy() * 1.0 / n_total
+    accuracy = n_correct.data.numpy() * 1.0 / n_total
 
-    return accu
+    return accuracy
