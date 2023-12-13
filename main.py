@@ -20,19 +20,20 @@ cuda = True
 cudnn.benchmark = True
 lr = 1e-3
 weight_decay = 1e-5
-batch_size = 32
-image_size = 224
+batch_size = 16
+image_size = 256
 n_epoch = 20
 
-manual_seed = random.randint(1, 10000)
-random.seed(manual_seed)
-torch.manual_seed(manual_seed)
+
+random.seed(42)
+torch.manual_seed(42)
 
 # load data
 transform = transforms.Compose([
     transforms.Resize(image_size),
+    transforms.RandomCrop(224),
     transforms.ToTensor(),
-    transforms.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5))
+    transforms.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))
 ])
 
 train_source_set = GetLoader(
